@@ -1,0 +1,7 @@
+{
+  "$schema": "https://aka.ms/copilot-mcp-allowlist-schema",
+  "version": "1.0",
+  "codingAgentEnabled": true,
+  "_comment": "Copilot Coding Agent enabled. No external MCP servers — RIFCC is prompt-engineering only.",
+  "mcpServers": []
+}

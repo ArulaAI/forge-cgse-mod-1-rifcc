@@ -1,0 +1,21 @@
+# Lefthook for forge-* lab repos.
+# Per ADR 0004 (no GH Actions auto-triggers), pre-commit catches everything locally.
+
+pre-commit:
+  parallel: true
+  commands:
+    forge-validate:
+      run: |
+        if command -v forge >/dev/null 2>&1; then
+          forge validate "$(pwd)"
+        else
+          echo "forge CLI not installed; skipping. uv pip install forge-prowess-primitives"
+        fi
+    markdownlint:
+      glob: "*.md"
+      run: |
+        if command -v markdownlint >/dev/null 2>&1; then
+          markdownlint {staged_files}
+        else
+          echo "markdownlint not installed; skipping. brew install markdownlint-cli"
+        fi

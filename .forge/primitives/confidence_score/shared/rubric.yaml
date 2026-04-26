@@ -1,0 +1,27 @@
+dimensions:
+  - id: specificity
+    description: "Artifact states what it does and what it does NOT do"
+    weight: 0.25
+  - id: error_handling
+    description: "Failure paths explicitly addressed"
+    weight: 0.20
+  - id: testability
+    description: "Acceptance criteria are measurable and falsifiable"
+    weight: 0.25
+  - id: dependency_clarity
+    description: "External dependencies named and versions constrained"
+    weight: 0.15
+  - id: security_consideration
+    description: "Security-relevant inputs or outputs explicitly noted"
+    weight: 0.15
+
+thresholds:
+  low:
+    max_weighted_score: 0.39
+  medium:
+    min_weighted_score: 0.40
+    max_weighted_score: 0.69
+  high:
+    min_weighted_score: 0.70
+
+gate_default: medium

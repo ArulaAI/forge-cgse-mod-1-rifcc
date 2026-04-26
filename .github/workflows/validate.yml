@@ -1,0 +1,28 @@
+# Validation workflow — DORMANT (ADR 0004: no auto-triggers, budget constraint).
+# Trigger manually via: gh workflow run validate.yml
+# When the GHA budget refreshes, add push/pull_request triggers here in a bulk PR.
+name: Validate
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: forge validate + make grade
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install forge CLI
+        run: pip install forge-prowess-cli
+
+      - name: forge validate
+        run: forge validate .
+
+      - name: make grade
+        run: make grade

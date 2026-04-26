@@ -1,0 +1,20 @@
+questions:
+  - id: q1_observation
+    prompt: "What specific behavior or result made you pause and form this hypothesis?"
+    purpose: "Grounds the hypothesis in an observable event"
+
+  - id: q2_mechanism
+    prompt: "What underlying mechanism do you believe causes that behavior?"
+    purpose: "Forces a causal claim, not just a correlation"
+
+  - id: q3_prediction
+    prompt: "If your hypothesis is correct, what would you expect to see when you test it?"
+    purpose: "Makes the hypothesis falsifiable"
+
+  - id: q4_null
+    prompt: "What would a refutation look like — what evidence would convince you the hypothesis is wrong?"
+    purpose: "Explicitly names the null condition"
+
+  - id: q5_confidence
+    prompt: "On a scale of Low/Medium/High, how confident are you right now, and why?"
+    purpose: "Seeds the confidence field; will be re-evaluated by F1 if invoked"

@@ -1,0 +1,4 @@
+{
+  "_comment": "MCP server registry for Claude Code. Add lab-specific MCP servers here.",
+  "mcpServers": {}
+}

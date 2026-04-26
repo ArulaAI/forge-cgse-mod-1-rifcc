@@ -1,0 +1,21 @@
+{
+  "_comment": "Journey-recorder hooks for GitHub Copilot. Sourced from forge-prowess-primitives journey_recorder/adapters/copilot/hooks-snippet.json. Deep-merge via 'forge sync' — do not overwrite existing hooks arrays.",
+  "hooks": [
+    {
+      "event": "session-start",
+      "run": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh session_start"
+    },
+    {
+      "event": "pre-request",
+      "run": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh pre_tool_use"
+    },
+    {
+      "event": "post-response",
+      "run": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh post_tool_use"
+    },
+    {
+      "event": "session-end",
+      "run": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh session_end"
+    }
+  ]
+}

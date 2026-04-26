@@ -1,0 +1,17 @@
+# Forge runtime artifacts (never committed)
+.forge/journey/
+
+# Python
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+
+# Secrets / credentials
+.env
+*.pem
+*.key
+
+# macOS
+.DS_Store

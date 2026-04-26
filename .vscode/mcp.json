@@ -1,0 +1,4 @@
+{
+  "_comment": "MCP server registry for VS Code / Copilot. Add lab-specific MCP servers here (e.g. SQL, SAST, language servers).",
+  "servers": {}
+}

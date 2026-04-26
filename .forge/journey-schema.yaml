@@ -1,0 +1,7 @@
+events:
+  - name: walk_rifcc_run
+    description: "Emitted when /walk-rifcc walks a fuzzy ask through R-I-F-C-C."
+    fields:
+      - {name: ask, type: string, required: true}
+      - {name: letters_walked, type: int, required: true}
+      - {name: confidence, type: string, required: false}

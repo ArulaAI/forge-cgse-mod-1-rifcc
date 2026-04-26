@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+jwt:
+  secret: testSecretKeyThatIsAtLeast256BitsLongForTesting1234567890
+  expiration-ms: 3600000

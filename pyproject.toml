@@ -1,0 +1,15 @@
+[project]
+name = "forge-cgse-mod-1-rifcc"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+[dependency-groups]
+dev = ["pytest>=8.0.0"]
+
+[tool.uv]
+dev-dependencies = ["pytest>=8.0.0"]
+
+[tool.pytest.ini_options]
+testpaths = [".forge/local/primitives/walk-rifcc/shared", "exercises"]
+python_files = ["test_*.py"]
+addopts = "-q"

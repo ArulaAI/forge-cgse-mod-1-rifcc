@@ -1,0 +1,43 @@
+lab: forge-cgse-mod-1-rifcc
+forge_primitives_version: "0.4.0"
+total_points: 100
+
+criteria:
+  - id: tests-pass
+    title: All pytest cases pass
+    weight: 25
+    evidence:
+      type: shell
+      cmd: "make test"
+      expect_exit: 0
+  - id: spec-driven
+    title: spec.md before implementation
+    weight: 15
+    evidence:
+      type: file-exists
+      path: "exercises/lab-1-rifcc-walk/spec.md"
+      content_check:
+        min_length: 200
+  - id: confidence-gated
+    title: Confidence ≥ Medium
+    weight: 10
+    evidence:
+      type: journey-event-present
+      event: confidence_score
+      where: "result in ['medium', 'high']"
+  - id: walk-rifcc-used
+    title: /walk-rifcc invoked at least once
+    weight: 25
+    evidence:
+      type: journey-event-present
+      event: walk_rifcc_run
+      where: "letters_walked >= 5"
+  - id: prompt-quality
+    title: Educator-style craft
+    weight: 25
+    evidence:
+      type: llm-judged
+      rubric: "docs/grader-rubrics/prompt-quality.md"
+      input: ".forge/journey/<run-id>.jsonl"
+      scoring: "0-25"
+      model_logical: grader

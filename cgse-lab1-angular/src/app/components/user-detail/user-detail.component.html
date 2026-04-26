@@ -1,0 +1,20 @@
+<div class="user-detail">
+  @if (loading) {
+    <p>Loading...</p>
+  }
+
+  @if (error) {
+    <div class="error">{{ error }}</div>
+  }
+
+  @if (user) {
+    <div class="user-card">
+      <h2>{{ user.name }}</h2>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>ID:</strong> {{ user.id }}</p>
+      @if (user.role) {
+        <p><strong>Role:</strong> {{ user.role }}</p>
+      }
+    </div>
+  }
+</div>

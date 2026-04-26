@@ -1,0 +1,56 @@
+---
+# F5 /spec-write — interview question bank
+# Ordered: goal → problem → constraints → stakeholders → success → failure → approach
+#          → file changes → tests → risks → decided → open
+#
+# The interviewer asks these one at a time, passing all prior answers as context
+# with each subsequent question so the LLM can provide a coherent expansion.
+
+questions:
+  - id: q01_goal
+    prompt: "In one sentence: what is the goal of this feature or task?"
+    purpose: "Establishes the single north-star statement for the spec Goal section"
+
+  - id: q02_problem
+    prompt: "What problem does this solve, and for whom?"
+    purpose: "Grounds the goal in a real user/developer pain point"
+
+  - id: q03_constraints
+    prompt: "What are the non-negotiable constraints? (tech stack, existing APIs, performance budget, etc.)"
+    purpose: "Surfaces hard boundaries the architecture must respect"
+
+  - id: q04_success
+    prompt: "How will you know when this is done? Give at least two measurable acceptance criteria."
+    purpose: "Forces falsifiable success conditions before implementation"
+
+  - id: q05_failure_modes
+    prompt: "What could go wrong? Name at least two failure modes this design must handle."
+    purpose: "Populates the Risks section and forces defensive design thinking"
+
+  - id: q06_approach
+    prompt: "What is your high-level technical approach in 2-4 sentences?"
+    purpose: "Seeds the Architecture section; identifies key components and data flow"
+
+  - id: q07_files
+    prompt: "Which existing files will be modified, and which new files will be created?"
+    purpose: "Populates the File structure section with concrete change scope"
+
+  - id: q08_tests
+    prompt: "What tests will you write to verify correctness?"
+    purpose: "Makes the test strategy explicit before code is written"
+
+  - id: q09_risks
+    prompt: "What is the biggest risk in this plan, and how will you mitigate it?"
+    purpose: "Deepens the Risks section beyond failure mode listing"
+
+  - id: q10_dependencies
+    prompt: "What external dependencies does this introduce? Any new packages or services?"
+    purpose: "Flags dependency risk and version-pinning requirements"
+
+  - id: q11_decided
+    prompt: "What decisions have already been made that this plan must respect?"
+    purpose: "Populates the 'decided' half of the Decision log"
+
+  - id: q12_open
+    prompt: "What decisions are still open that a reviewer should weigh in on?"
+    purpose: "Populates the 'open' half of the Decision log; surfaces review targets"

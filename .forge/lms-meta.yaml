@@ -1,0 +1,8 @@
+display_name: "Forge Prowess — CGSE — Module 1: RIFCC"
+estimated_duration_hr: 2
+prerequisites: [meta-workflow]
+learning_outcomes:
+  - "Walk a fuzzy ask through RIFCC"
+  - "Apply RIFCC to a batch of prompts"
+  - "Critique non-RIFCC prompts"
+certification_credit_units: 1

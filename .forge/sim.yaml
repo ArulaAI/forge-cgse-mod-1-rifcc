@@ -1,0 +1,55 @@
+sim_slug: cgse-mod-1
+labs_id: forge-cgse-mod-1-rifcc
+display_name: "Forge Prowess — CGSE — Module 1: RIFCC"
+track: cgse
+schema_version: "1.0"
+hero_status: hero
+display_order: 10
+
+browser_walkthrough:
+  enabled: true
+  estimated_duration_min: 40
+  steps:
+    - id: rifcc-walk
+      title: "Walk a fuzzy ask through R-I-F-C-C (lab-1)"
+      duration_min: 12
+      kind: prompt-input
+    - id: rifcc-batch
+      title: "Apply RIFCC to a batch of 5 prompts (lab-2)"
+      duration_min: 12
+      kind: prompt-input
+    - id: rifcc-validate
+      title: "Validate RIFCC outputs against acceptance criteria (lab-3)"
+      duration_min: 10
+      kind: prompt-input
+    - id: critique-prompts
+      title: "Critique non-RIFCC prompts (lab-4)"
+      duration_min: 6
+      kind: prompt-input
+
+workspace:
+  enabled: true
+  prewarm_script: .forge/prewarm.sh
+  initial_directory: exercises/lab-1-rifcc-walk
+  expected_harness: both
+  bedrock_model_logical: default
+
+curriculum:
+  workflows: [W3, W7]
+  failure_modes_practiced: [FM2, FM4]
+  forge_optionals: [F8, F7, F1, F4]
+  primitives_l1_focus: [agents, slash-commands, copilot-mcp-allowlist, output-styles]
+
+completion:
+  unlock_steps: 3
+  scorecard_pdf_template: scorecards/cgse-mod-1.html.j2
+  receipt_email_template: emails/sim-receipt-cgse-mod-1.html.j2
+
+lms:
+  prerequisites: [meta-workflow]
+  estimated_duration_hr: 2
+  certification_credit_units: 1
+  learning_outcomes:
+    - "Walk a fuzzy ask through RIFCC (Role/Intent/Frame/Constraints/Confidence)"
+    - "Apply RIFCC to a batch of prompts and validate outputs"
+    - "Critique non-RIFCC prompts and rewrite them in the structured form"
