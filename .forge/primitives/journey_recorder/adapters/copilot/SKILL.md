@@ -1,38 +1,53 @@
 ---
 name: journey-recorder
-description: Always-on hook adapter that records Copilot lifecycle events (pre-request, post-response — plus sessionStart/sessionEnd wired through the same hooks-snippet.json) to an append-only JSONL file at .forge/journey/<run-id>.jsonl. Sensitive text is hashed (SHA-256, 16-char) and redacted before storage. Registered via forge sync — does not need to be invoked manually.
+description: Always-on hook adapter that records Copilot lifecycle events (SessionStart, PreToolUse, PostToolUse, SessionEnd) to an append-only JSONL file at .forge/journey/<run-id>.jsonl. Uses the Claude Code hook format natively supported by VS Code Copilot >=1.109.3. Sensitive text is hashed (SHA-256, 16-char) and redacted before storage. Registered via forge sync — does not need to be invoked manually.
 ---
 
 # journey-recorder — Copilot adapter
 
-Registers the `journey_recorder` hook in a lab's `.github/hooks/hooks.json` so that every Copilot session activity is captured without any manual step.
+Registers the `journey_recorder` hooks in a lab's `.github/hooks/journey-recorder.json` so that every Copilot session activity is captured without any manual step.
 
 ## What it does
 
-`forge sync` deep-merges `hooks-snippet.json` into the lab's `.github/hooks/hooks.json`. Once merged, Copilot fires `record-hook.sh` on the 4 supported lifecycle events, which builds a structured JSON event and pipes it to the shared `primitives/journey_recorder/shared/recorder.sh`. The recorder appends the event (with hash + preview for any `*_text` fields) to `.forge/journey/<run-id>.jsonl`.
+`forge sync` deep-merges `hooks-snippet.json` into the lab's `.github/hooks/journey-recorder.json`. Once merged, VS Code Copilot (≥ 1.109.3) fires `record-hook.sh` on the 4 registered lifecycle events, which builds a structured JSON event and pipes it to the shared `primitives/journey_recorder/shared/recorder.sh`. The recorder appends the event (with hash + preview for any `*_text` fields) to `.forge/journey/<run-id>.jsonl`.
 
-## Copilot 4-event model vs. journey schema mapping
+## Hook format
 
-Copilot exposes 4 hook events. They map to the journey schema as follows:
+Since January 2026, VS Code Copilot reads the same hook format as Claude Code:
 
-| Copilot event    | Journey event type |
+```json
+{ "hooks": { "EventName": [{ "type": "command", "command": "..." }] } }
+```
+
+Both harness adapters now use this unified format. VS Code Copilot also reads `.claude/settings.json` directly, so a single hook configuration can serve both harnesses in practice.
+
+## Event mapping
+
+U3 registers hooks for 4 lifecycle events:
+
+| Hook event       | Journey event type |
 |---|---|
-| `session-start`  | `session_start`    |
-| `pre-request`    | `pre_tool_use`     |
-| `post-response`  | `post_tool_use`    |
-| `session-end`    | `session_end`      |
+| `SessionStart`   | `session_start`    |
+| `PreToolUse`     | `pre_tool_use`     |
+| `PostToolUse`    | `post_tool_use`    |
+| `SessionEnd`     | `session_end`      |
 
-`UserPromptSubmit` has no direct Copilot analogue. The first `pre-request` in a session carries the initial user prompt context through the standard `$COPILOT_USER_INPUT` environment variable when available.
+`UserPromptSubmit` has no direct Copilot analogue. The first `PreToolUse` in a session carries the initial user prompt context through `$COPILOT_USER_INPUT` when available.
+
+## Caveats
+
+- **Matchers are ignored** — VS Code Copilot fires hooks on ALL tool invocations regardless of matcher values. The `"matcher": ".*"` in the snippet is for Claude Code compatibility only.
+- **JetBrains not supported** — Copilot in JetBrains IDEs has no hook system. Labs targeting JetBrains must rely on MCP tools or manual invocation.
 
 ## Merge semantics
 
-`forge sync` performs a **deep-merge** — it appends to existing hooks arrays rather than replacing them. Labs that already have `pre-request` hooks for other purposes are not affected. See `README.md` in the journey_recorder directory for details.
+`forge sync` performs a **deep-merge** — it appends to existing hooks arrays rather than replacing them. Labs that already have hooks for other purposes are not affected. See `README.md` in the journey_recorder directory for details.
 
 ## Files shipped by forge sync
 
 | Source (primitive library) | Destination (lab) |
 |---|---|
-| `adapters/copilot/hooks-snippet.json` | merged into `.github/hooks/hooks.json` |
+| `adapters/copilot/hooks-snippet.json` | merged into `.github/hooks/journey-recorder.json` |
 | `adapters/copilot/record-hook.sh` | `.forge/primitives/journey_recorder/adapters/copilot/record-hook.sh` |
 | `shared/recorder.sh` (via `primitives/journey_recorder/shared/recorder.sh`) | `.forge/primitives/journey_recorder/shared/recorder.sh` |
 

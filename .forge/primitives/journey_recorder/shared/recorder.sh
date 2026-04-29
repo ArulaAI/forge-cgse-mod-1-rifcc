@@ -104,6 +104,14 @@ while i < len(cli_args):
     else:
         i += 1
 
+# Parse JSON-valued fields (e.g. token_usage).
+for key in list(fields.keys()):
+    if key == "token_usage" and isinstance(fields[key], str):
+        try:
+            fields[key] = json.loads(fields[key])
+        except (json.JSONDecodeError, TypeError):
+            pass  # leave as string if not valid JSON
+
 # Validate required fields.
 if "type" not in fields and "event_type" not in fields:
     print("recorder.sh: --event-type is required", file=sys.stderr)
