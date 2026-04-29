@@ -1,21 +1,47 @@
 {
-  "_comment": "Merge into .github/hooks/hooks.json via 'forge sync'. Copilot 4-event model mapped to journey schema. Deep-merge — do not overwrite existing hooks arrays.",
-  "hooks": [
-    {
-      "event": "session-start",
-      "run": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh session_start"
-    },
-    {
-      "event": "pre-request",
-      "run": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh pre_tool_use"
-    },
-    {
-      "event": "post-response",
-      "run": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh post_tool_use"
-    },
-    {
-      "event": "session-end",
-      "run": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh session_end"
-    }
-  ]
+  "_comment": "Merge into lab's .github/hooks/journey-recorder.json via 'forge sync'. Uses the Claude Code hook format that VS Code Copilot (>=1.109.3) natively reads. Deep-merge — do not overwrite existing hooks arrays. Note: VS Code Copilot ignores matchers (hooks fire on ALL tool invocations regardless).",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh pre_tool_use \"${COPILOT_TOOL_NAME:-}\" \"${COPILOT_TOOL_INPUT:-}\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh post_tool_use \"${COPILOT_TOOL_NAME:-}\" \"${COPILOT_TOOL_RESULT:-}\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh session_start"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh session_end"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -1,0 +1,46 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh pre_tool_use \"${COPILOT_TOOL_NAME:-}\" \"${COPILOT_TOOL_INPUT:-}\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh post_tool_use \"${COPILOT_TOOL_NAME:-}\" \"${COPILOT_TOOL_RESULT:-}\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh session_start"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .forge/primitives/journey_recorder/adapters/copilot/record-hook.sh session_end"
+          }
+        ]
+      }
+    ]
+  }
+}

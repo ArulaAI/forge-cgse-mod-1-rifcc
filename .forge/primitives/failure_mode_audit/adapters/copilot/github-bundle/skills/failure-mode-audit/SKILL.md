@@ -29,7 +29,7 @@ Severity ordering: `low < medium < high < critical`.
 
 - Before opening a PR — audit the diff
 - In code review — audit changed files
-- As a hook (`.github/hooks/hooks.json` `preToolUse`) — audit before write tool fires
+- As a hook (`.github/hooks/failure-mode-audit.json` `PreToolUse`) — audit before write tool fires
 - In CI when budget allows (`.github/workflows/audit.yml` is dormant `workflow_dispatch:` until then)
 
 ## Invariants

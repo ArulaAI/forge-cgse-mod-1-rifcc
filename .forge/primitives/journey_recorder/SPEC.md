@@ -173,16 +173,22 @@ forge sync journey-recorder --harness claude-code
 
 ### Copilot (`adapters/copilot/`)
 
-- **`hooks-snippet.json`** — JSON fragment merged into a lab's `.github/hooks/hooks.json`. Copilot
-  exposes 4 hook events; U3 maps them as follows:
+- **`hooks-snippet.json`** — JSON fragment merged into a lab's `.github/hooks/journey-recorder.json`.
+  Since VS Code Copilot ≥ 1.109.3 (January 2026), Copilot reads the same hook format as
+  Claude Code. U3 registers hooks for the same 4 lifecycle events as Claude Code:
 
-  | Copilot event | Journey event type |
+  | Hook event | Journey event type |
   |---|---|
-  | `pre-request` | `pre_tool_use` |
-  | `post-response` | `post_tool_use` |
+  | `SessionStart` | `session_start` |
+  | `PreToolUse` | `pre_tool_use` |
+  | `PostToolUse` | `post_tool_use` |
+  | `SessionEnd` | `session_end` |
 
-  `SessionStart` / `SessionEnd` / `UserPromptSubmit` are not directly available as Copilot hook
-  events; U4 (`/journey-curator`) synthesises session boundaries from the request sequence.
+  `UserPromptSubmit` has no direct Copilot analogue. The first `PreToolUse` in a session
+  carries the initial user prompt context through `$COPILOT_USER_INPUT` when available.
+
+  **Caveats:** VS Code Copilot ignores matcher values (hooks fire on ALL tool invocations).
+  JetBrains Copilot does not support hooks at all.
 
 - **`record-hook.sh`** — Same structure as the Claude Code variant but sets `harness: copilot`.
 
@@ -190,5 +196,5 @@ Merge command:
 
 ```bash
 forge sync journey-recorder --harness copilot
-# Merges hooks-snippet.json into .github/hooks/hooks.json
+# Merges hooks-snippet.json into .github/hooks/journey-recorder.json
 ```
